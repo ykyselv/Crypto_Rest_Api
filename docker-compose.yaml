@@ -1,0 +1,70 @@
+version: "3"
+
+services:
+
+  redis:
+    image: "redis:alpine"
+    hostname: redis
+    ports:
+      - 6379:6379
+    networks:
+      - crypto
+
+#  НАЗВАНИЕ СЕРВИСА:
+#  закинуть в settings:
+  postgres:
+#    образ, который мы с вами вытягиваем
+    image: postgres
+    restart: always
+    volumes:
+      - ./init.sh:/docker-entrypoint-initdb.d/init.sh
+    environment:
+      POSTGRES_PASSWORD: 'qwerty123456'
+    ports:
+      - 5432:5432
+    networks:
+      - crypto
+
+  celery:
+    build: .
+    container_name: 'demo_app_celery'
+    command: celery -A crypto_project worker -B
+    volumes:
+      - .:/crypto_project
+    links:
+      - redis
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - crypto
+
+
+  crypto_proj:
+##   Зайти в папку CryptoProject и собрать
+    build: .
+##    если вдруг мы перезагрузим виртуальную машину,
+##    то все эти контейнеры рестартонут
+#    command: python3 manage.py makemigrations python3 manage.py migrate python3 manage.py runserver 0.0.0.0:8000
+    restart: always
+    ports:
+      - 8000:8000
+#      #    указать все переменные окружения
+    environment:
+      - TZ=Europe/Kiev
+      - PYTHONUNBUFFERED=1
+    networks:
+      - crypto
+    depends_on:
+      - postgres
+
+networks:
+  crypto:
+    driver: bridge
+
+
+
+
+
+
+
