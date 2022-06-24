@@ -16,7 +16,6 @@ from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -28,11 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-
 # Application definition
-
-
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -45,9 +40,11 @@ INSTALLED_APPS = [
     'crypto_app.apps.CryptoAppConfig',
     'django_extensions',
     'djoser',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'graphene_django',
+    'django_filters',
+    # 'django-graphql-jwt',
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,7 +75,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'crypto_project.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -112,7 +108,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -123,7 +118,6 @@ TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 
 USE_TZ = True
-
 
 STATIC_URL = '/static/'
 
@@ -199,4 +193,12 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+GRAPHENE = {
+    "SCHEMA": "crypto_project.schema.schema"
+}
+
+
+
+
 

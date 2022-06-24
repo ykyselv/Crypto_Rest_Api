@@ -69,8 +69,6 @@ class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
 
     def create(self, request, *args, **kwargs):
-        # print(request.headers)
-        print("HUITA", request.user.id)
         pk = kwargs.get("pk", None)
         if pk:
             return Response({'post': "Method POST not allowed"})

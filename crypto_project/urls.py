@@ -18,6 +18,8 @@ from django.urls import path, include, register_converter
 from crypto_app.views import AverageAPIView, CryptoAPIView, CommentViewSet, UserAPIView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 from rest_framework import routers
+from graphene_django.views import GraphQLView
+
 
 
 admin.site.site_header = 'Crypto_app_administration'
@@ -40,10 +42,7 @@ urlpatterns = [
 
     # URL for comments:
     path('api/', include(router.urls), name='api_comment'),
-    # path('api/comment/', CommentViewSet.as_view({'get': 'list'})),
-    # path('api/comment/new', CommentViewSet.as_view({'post': 'create'})),
-    # path('api/comment/<int:pk>/', CommentViewSet.as_view({'put': 'update'})),
-    # path('api/comment/<int:pk>/', CommentViewSet.as_view({'delete': 'destroy'})),
+    path("graphql/", GraphQLView.as_view(graphiql=True)),
 ]
 
 

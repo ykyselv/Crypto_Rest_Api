@@ -5,6 +5,7 @@ RUN apt-get update
 RUN mkdir -p /usr/src/app/
 WORKDIR /usr/src/app/
 COPY . /usr/src/app/
+RUN python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 #Декларируем порт, что бы потом его пробросить:
