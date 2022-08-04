@@ -18,7 +18,6 @@ from django.urls import path, include, register_converter
 from crypto_app.views import AverageAPIView, CryptoAPIView, CommentViewSet, UserAPIView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 from rest_framework import routers
-from graphene_django.views import GraphQLView
 
 
 
@@ -42,7 +41,6 @@ urlpatterns = [
 
     # URL for comments:
     path('api/', include(router.urls), name='api_comment'),
-    path("graphql/", GraphQLView.as_view(graphiql=True)),
 ]
 
 

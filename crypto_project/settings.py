@@ -41,9 +41,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'djoser',
     'rest_framework.authtoken',
-    'graphene_django',
     'django_filters',
-    # 'django-graphql-jwt',
 ]
 
 MIDDLEWARE = [
@@ -193,11 +191,6 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
-
-GRAPHENE = {
-    "SCHEMA": "crypto_project.schema.schema"
-}
-
 
 
 
