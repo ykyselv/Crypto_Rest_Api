@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('crypto_app', '0003_crypto_curr_n_alter_crypto_curr'),
     ]

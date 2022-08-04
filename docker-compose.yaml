@@ -10,10 +10,10 @@ services:
     networks:
       - crypto
 
-#  НАЗВАНИЕ СЕРВИСА:
-#  закинуть в settings:
+  #  НАЗВАНИЕ СЕРВИСА:
+  #  закинуть в settings:
   postgres:
-#    образ, который мы с вами вытягиваем
+    #    образ, который мы с вами вытягиваем
     image: postgres
     restart: always
     volumes:
@@ -41,15 +41,15 @@ services:
 
 
   crypto_proj:
-##   Зайти в папку CryptoProject и собрать
+    ##   Зайти в папку CryptoProject и собрать
     build: .
-##    если вдруг мы перезагрузим виртуальную машину,
-##    то все эти контейнеры рестартонут
-#    command: python3 manage.py makemigrations python3 manage.py migrate python3 manage.py runserver 0.0.0.0:8000
+    ##    если вдруг мы перезагрузим виртуальную машину,
+    ##    то все эти контейнеры рестартонут
+    #    command: python3 manage.py makemigrations python3 manage.py migrate python3 manage.py runserver 0.0.0.0:8000
     restart: always
     ports:
       - 8000:8000
-#      #    указать все переменные окружения
+    #      #    указать все переменные окружения
     environment:
       - TZ=Europe/Kiev
       - PYTHONUNBUFFERED=1

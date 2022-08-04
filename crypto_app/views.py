@@ -1,14 +1,13 @@
+from django.contrib.auth.models import User
+from django.db.models import Avg
 from django.forms import model_to_dict
 from rest_framework import generics, viewsets
-from .models import Crypto, Comment
-from rest_framework.response import Response
-from .serializers import CryptoSerializer, CommentSerializer, UserSerializer
-from rest_framework.views import APIView
-from django.db.models import Avg
 from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth.models import User
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-
+from .models import Crypto, Comment
+from .serializers import CryptoSerializer, CommentSerializer, UserSerializer
 
 
 class UserAPIView(generics.ListAPIView):
@@ -19,7 +18,7 @@ class UserAPIView(generics.ListAPIView):
 class CryptoAPIView(generics.ListAPIView):
     serializer_class = CryptoSerializer
 
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         curr = self.request.query_params.get("curr")
@@ -32,11 +31,11 @@ class CryptoAPIView(generics.ListAPIView):
 
         if curr or crypt:
             if year_created and not month_created and not day_created and not hour_created and not minute_created:
-                    return (Crypto.objects.filter(curr=curr, cp_curr=crypt, time_create__year=year_created))
+                return (Crypto.objects.filter(curr=curr, cp_curr=crypt, time_create__year=year_created))
 
             elif year_created and month_created and not day_created and not hour_created and not minute_created:
-                return(Crypto.objects.filter(curr=curr, cp_curr=crypt, time_create__year=year_created,
-                                            time_create__month=month_created))
+                return (Crypto.objects.filter(curr=curr, cp_curr=crypt, time_create__year=year_created,
+                                              time_create__month=month_created))
 
             elif year_created and month_created and day_created and not hour_created and not minute_created:
                 return (Crypto.objects.filter(curr=curr, cp_curr=crypt, time_create__year=year_created,
@@ -44,15 +43,15 @@ class CryptoAPIView(generics.ListAPIView):
                                               time_create__day=day_created))
 
             elif year_created and month_created and day_created and hour_created and not minute_created:
-                return (Crypto.objects.filter(curr=curr, cp_curr=crypt,time_create__year=year_created,
+                return (Crypto.objects.filter(curr=curr, cp_curr=crypt, time_create__year=year_created,
                                               time_create__month=month_created,
                                               time_create__day=day_created, time_create__hour=hour_created))
 
             elif year_created and month_created and day_created and hour_created and minute_created:
                 return (Crypto.objects.filter(curr=curr, cp_curr=crypt, time_create__year=year_created,
-                                                  time_create__month=month_created,
-                                                  time_create__day=day_created, time_create__hour=hour_created,
-                                                  time_create__minute=minute_created))
+                                              time_create__month=month_created,
+                                              time_create__day=day_created, time_create__hour=hour_created,
+                                              time_create__minute=minute_created))
 
             else:
                 return (Crypto.objects.filter(curr=curr, cp_curr=crypt))
@@ -61,9 +60,7 @@ class CryptoAPIView(generics.ListAPIView):
             return (Crypto.objects.all())
 
 
-
 class CommentViewSet(viewsets.ModelViewSet):
-
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = (IsAuthenticated,)
@@ -79,7 +76,6 @@ class CommentViewSet(viewsets.ModelViewSet):
                 cat_id=request.user.id
             )
             return Response({'post': model_to_dict(new_comment)})
-
 
     def update(self, request, *args, **kwargs):
 
@@ -101,7 +97,6 @@ class CommentViewSet(viewsets.ModelViewSet):
             except:
                 return Response({'error': "Object does not exists"})
 
-
     def destroy(self, request, *args, **kwargs):
         pk = kwargs.get("pk", None)
         if not pk:
@@ -118,9 +113,7 @@ class CommentViewSet(viewsets.ModelViewSet):
                 return Response({'error': "Object does not exists"})
 
 
-
 class AverageAPIView(APIView):
-
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
@@ -138,7 +131,9 @@ class AverageAPIView(APIView):
 
             # среднее за год:
             elif year_created and not month_created and not day_created:
-                return Response(Crypto.objects.filter(curr=curr, cp_curr=crypt, time_create__year=year_created).aggregate(Avg('price')))
+                return Response(
+                    Crypto.objects.filter(curr=curr, cp_curr=crypt, time_create__year=year_created).aggregate(
+                        Avg('price')))
 
             # среднее за месяц:
             elif year_created and month_created and not day_created:
@@ -159,9 +154,3 @@ class AverageAPIView(APIView):
 
         else:
             return Response({"error": "Please, enter currency and cryptocurrency for find the average"})
-
-
-
-
-
-

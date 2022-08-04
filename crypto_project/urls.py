@@ -13,20 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include, register_converter
 from crypto_app.views import AverageAPIView, CryptoAPIView, CommentViewSet, UserAPIView
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+from django.contrib import admin
+from django.urls import path, include
 from rest_framework import routers
-
-
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
 admin.site.site_header = 'Crypto_app_administration'
 admin.site.index_title = 'Our_admin_panel'
 
 router = routers.SimpleRouter()
 router.register(r'comment', CommentViewSet)
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,6 +39,3 @@ urlpatterns = [
     # URL for comments:
     path('api/', include(router.urls), name='api_comment'),
 ]
-
-
-

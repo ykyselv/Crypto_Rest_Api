@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('crypto_app', '0010_remove_crypto_curr_n'),
     ]
@@ -13,6 +12,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='crypto',
             name='currency',
-            field=models.CharField(choices=[('EUR', 'Euro'), ('USD', 'Dollars'), ('UAH', 'Hryvna'), ('RUB', 'Rubbles')], default='UAH', max_length=3),
+            field=models.CharField(choices=[('EUR', 'Euro'), ('USD', 'Dollars'), ('UAH', 'Hryvna'), ('RUB', 'Rubbles')],
+                                   default='UAH', max_length=3),
         ),
     ]
